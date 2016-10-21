@@ -36,7 +36,7 @@
 #   unset GRAPHITE_ROOT GRAPHITE_STORAGE_DIR GRAPHITE_CONF_DIR
 #   deactivate
 #
---trusted-host maven.openx.org:8081
+--trusted-host maven.openx.org
 --index-url http://maven.openx.org:8081/artifactory/api/pypi/pypi-virtual/simple/
 --extra-index-url http://maven.openx.org:8080/simple/
 
