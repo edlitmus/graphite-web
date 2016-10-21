@@ -39,7 +39,7 @@
 
 cffi==1.7.0
 Django==1.9
-python-memcached==1.47
+python-memcached
 txAMQP==0.4
 simplejson==2.1.6
 django-tagging==0.4.3
