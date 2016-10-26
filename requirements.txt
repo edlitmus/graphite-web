@@ -37,7 +37,6 @@
 #   deactivate
 #
 
-cffi==1.7.0
 Django==1.9
 python-memcached==1.47
 txAMQP==0.4
