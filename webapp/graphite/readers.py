@@ -258,8 +258,8 @@ class RRDReader:
 
     flush_arg = ''
     if settings.FLUSHRRDCACHED:
-      flush_arg = '--daemon ' + settings.FLUSHRRDCACHED
-      # rrdtool.flushcached(self.fs_path, '--daemon', settings.FLUSHRRDCACHED)
+      print("FLUSHING FS PATH: {0}".format(self.fs_path))
+      rrdtool.flushcached(self.fs_path, '--daemon', settings.FLUSHRRDCACHED)
 
     log.info("FS_PATH: {0}".format(self.fs_path))
     (timeInfo, columns, rows) = rrdtool.fetch(self.fs_path,settings.RRD_CF,'-s' + startString,'-e' + endString, flush_arg)
