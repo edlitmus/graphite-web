@@ -256,10 +256,13 @@ class RRDReader:
     startString = time.strftime("%H:%M_%Y%m%d+%Ss", time.localtime(startTime))
     endString = time.strftime("%H:%M_%Y%m%d+%Ss", time.localtime(endTime))
 
+    flush_arg = ''
     if settings.FLUSHRRDCACHED:
-      rrdtool.flushcached(self.fs_path, '--daemon', settings.FLUSHRRDCACHED)
+      flush_arg = '--daemon ' + settings.FLUSHRRDCACHED
+      # rrdtool.flushcached(self.fs_path, '--daemon', settings.FLUSHRRDCACHED)
 
-    (timeInfo, columns, rows) = rrdtool.fetch(self.fs_path,settings.RRD_CF,'-s' + startString,'-e' + endString)
+    log.info("FS_PATH: {0}".format(self.fs_path))
+    (timeInfo, columns, rows) = rrdtool.fetch(self.fs_path,settings.RRD_CF,'-s' + startString,'-e' + endString, flush_arg)
     colIndex = list(columns).index(self.datasource_name)
     rows.pop() #chop off the latest value because RRD returns crazy last values sometimes
     values = (row[colIndex] for row in rows)
