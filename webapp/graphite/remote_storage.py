@@ -190,8 +190,7 @@ class ReadResult(object):
         raise Exception("Error response %d %s from http://%s%s" % (response.status, response.reason, self.store.host, self.urlpath))
       pickled_response = response.read()
       self.result = {
-          series['name']: series
-          for series in unpickle.loads(pickled_response)
+          series['name']: [series for series in unpickle.loads(pickled_response)]
       }
       return self.result
     except:

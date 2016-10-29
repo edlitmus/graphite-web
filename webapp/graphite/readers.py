@@ -256,13 +256,15 @@ class RRDReader:
     startString = time.strftime("%H:%M_%Y%m%d+%Ss", time.localtime(startTime))
     endString = time.strftime("%H:%M_%Y%m%d+%Ss", time.localtime(endTime))
 
-    flush_arg = ''
+    args = [self.fs_path, settings.RRD_CF, '-s' + startString, '-e' + endString]
     if settings.FLUSHRRDCACHED:
-      print("FLUSHING FS PATH: {0}".format(self.fs_path))
-      rrdtool.flushcached(self.fs_path, '--daemon', settings.FLUSHRRDCACHED)
+      args.append('--daemon')
+      args.append(settings.FLUSHRRDCACHED)
+      args = tuple(args)
 
-    log.info("FS_PATH: {0}".format(self.fs_path))
-    (timeInfo, columns, rows) = rrdtool.fetch(self.fs_path,settings.RRD_CF,'-s' + startString,'-e' + endString, flush_arg)
+    # log.info("FS_PATH: {0}".format(self.fs_path))
+    # log.info("ARGS: {0}".format(",".join(args)))
+    (timeInfo, columns, rows) = rrdtool.fetch(*args)
     colIndex = list(columns).index(self.datasource_name)
     rows.pop() #chop off the latest value because RRD returns crazy last values sometimes
     values = (row[colIndex] for row in rows)
@@ -302,6 +304,7 @@ class RRDReader:
     return  retention_points * info['step']
 
 
+<<<<<<< 5cec72549004889a4a37c363c004749e1b599f53
 def merge_with_cache(cached_datapoints, start, step, values, func=None):
 
   consolidated=[]
@@ -338,6 +341,12 @@ def merge_with_cache(cached_datapoints, start, step, values, func=None):
       consolidated = cached_datapoints
 
   for (interval, value) in consolidated:
+=======
+def merge_with_cache(cached_datapoints, start, step, values):
+  for (timestamp, value) in cached_datapoints:
+      interval = timestamp - (timestamp % step)
+
+>>>>>>> call flush on fetch
       try:
           i = int(interval - start) / step
           if i < 0:
