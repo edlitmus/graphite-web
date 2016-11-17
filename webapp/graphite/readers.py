@@ -258,8 +258,7 @@ class RRDReader:
 
     args = [self.fs_path, settings.RRD_CF, '-s' + startString, '-e' + endString]
     if settings.FLUSHRRDCACHED:
-      args.append('--daemon')
-      args.append(settings.FLUSHRRDCACHED)
+      args.append('--daemon=' + settings.FLUSHRRDCACHED)
       args = tuple(args)
 
     # log.info("FS_PATH: {0}".format(self.fs_path))
