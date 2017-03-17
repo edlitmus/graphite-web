@@ -188,7 +188,7 @@ if not STANDARD_DIRS:
     if os.path.exists(WHISPER_DIR):
       STANDARD_DIRS.append(WHISPER_DIR)
   except ImportError:
-    print >> sys.stderr, "WARNING: whisper module could not be loaded, whisper support disabled"
+    pass
   try:
     import ceres  # noqa
     if os.path.exists(CERES_DIR):
@@ -200,7 +200,7 @@ if not STANDARD_DIRS:
     if os.path.exists(RRD_DIR):
       STANDARD_DIRS.append(RRD_DIR)
   except ImportError:
-    pass
+    print >> sys.stderr, "WARNING: rrdtool module could not be loaded, rrdtool support disabled"
 
 if DATABASES is None:
     DATABASES = {
